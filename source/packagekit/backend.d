@@ -20,17 +20,15 @@ module packagekit.backend;
 
 import pyd.pyd;
 import pyd.embedded;
+import ldc.attributes : weak;
 
 // negatively impacts build time
-//import glib.c.types : GKeyFile;
-alias GKeyFile = void;
+import glib.c.types : GKeyFile;
+import glib.c.functions : g_strdupv;
 
 import std.stdint : uint64_t;
 
-/** 
- * Returns: Deplicate string array
- */
-extern (C) char** g_strdupv(char**);
+@weak void pk_backend_job_finish(PkBackendJob *self);
 
 // TODO: Incorporate these properly
 alias PkBitfield = uint64_t;
@@ -114,146 +112,185 @@ export extern (C)
     bool pk_backend_supports_parallelization(PkBackend* self) => false;
     void pk_backend_job_start(PkBackend* self, PkBackendJob* job)
     {
+        pk_backend_job_finish(job);
     }
 
     void pk_backend_job_stop(PkBackend* self, PkBackendJob* job)
     {
+            pk_backend_job_finish(job);
     }
 
     void pk_backend_cancel(PkBackend* self, PkBackendJob* job)
     {
+            pk_backend_job_finish(job);
     }
 
     void pk_backend_download_packages(PkBackend* self, PkBackendJob* job,
             char** packageIDs, const(char*) dir)
     {
+            pk_backend_job_finish(job);
     }
 
     void pk_backend_get_categories(PkBackend* backend, PkBackendJob* job)
     {
+            pk_backend_job_finish(job);
     }
 
     void pk_backend_depends_on(PkBackend* backend, PkBackendJob* job,
             PkBitfield filters, char** packageIDs, bool recursive)
     {
+        pk_backend_job_finish(job);
     }
 
     void pk_backend_get_details(PkBackend* backend, PkBackendJob* job, char** packageIDs)
     {
+        pk_backend_job_finish(job);
     }
 
     void pk_backend_get_details_local(PkBackend* backend, PkBackendJob* job, char** packageIDs)
     {
+        pk_backend_job_finish(job);
     }
 
     void pk_backend_get_files_local(PkBackend* backend, PkBackendJob* job, char** files)
     {
+        pk_backend_job_finish(job);
     }
 
-    void pk_backend_get_distro_upgrades(PkBackend* backend, PkBackendJob* job);
+    void pk_backend_get_distro_upgrades(PkBackend* backend, PkBackendJob* job)
+    {
+        pk_backend_job_finish(job);
+    }
+
     void pk_backend_get_files(PkBackend* backend, PkBackendJob* job, char** files)
     {
+        pk_backend_job_finish(job);
     }
 
     void pk_backend_get_packages(PkBackend* backend, PkBackendJob* job, PkBitfield filters)
     {
+        pk_backend_job_finish(job);
     }
 
     void pk_backend_get_repo_list(PkBackend* backend, PkBackendJob* job, PkBitfield filters)
     {
+        pk_backend_job_finish(job);
     }
 
     void pk_backend_required_by(PkBackend* backend, PkBackendJob* job,
             PkBitfield filters, char** packageIDs, bool recursive)
     {
+        pk_backend_job_finish(job);
     }
 
     void pk_backend_get_update_detail(PkBackend* backend, PkBackendJob* job, char** packageIDs)
     {
+        pk_backend_job_finish(job);
     }
 
     void pk_backend_get_updates(PkBackend* backend, PkBackendJob* job, PkBitfield filters)
     {
+        pk_backend_job_finish(job);
     }
 
     void pk_backend_install_files(PkBackend* backend, PkBackendJob* job,
             PkBitfield transactionFlags)
     {
+        pk_backend_job_finish(job);
     }
 
     void pk_backend_install_packages(PkBackend* backend, PkBackendJob* job,
             PkBitfield transactionFlags, char** packageIDs)
     {
+        pk_backend_job_finish(job);
     }
 
     void pk_backend_install_signature(PkBackend* backend, PkBackendJob* job,
             PkSigTypeEnum type, const(char*) keyID, const(char*) packageID)
     {
+        pk_backend_job_finish(job);
     }
 
-    void pk_backend_refresh_cache(PkBackend* backend, PkBackendJob* job, bool force);
+    void pk_backend_refresh_cache(PkBackend* backend, PkBackendJob* job, bool force)
+    {
+        pk_backend_job_finish(job);
+    }
+
     void pk_backend_remove_packages(PkBackend* backend, PkBackendJob* job,
             PkBitfield transactionFlags, char** packageIDs, bool allowDeps, bool autoRemove)
     {
+        pk_backend_job_finish(job);
     }
 
     void pk_backend_repo_enable(PkBackend* backend, PkBackendJob* job,
             const(char*) repoID, bool enabled)
     {
+        pk_backend_job_finish(job);
     }
 
     void pk_backend_repo_set_data(PkBackend* backend, PkBackendJob* job,
             const(char*) repoID, const(char*) key, const(char*) val)
     {
+        pk_backend_job_finish(job);
     }
 
     void pk_backend_repo_remove(PkBackend* backend, PkBackendJob* job,
             PkBitfield transactionFlags, const(char*) repoID, bool autoRemove)
     {
+        pk_backend_job_finish(job);
     }
 
     void pk_backend_resolve(PkBackend* backend, PkBackendJob* job,
             PkBitfield filters, char** packageIDS)
     {
+        pk_backend_job_finish(job);
     }
 
     void pk_backend_search_details(PkBackend* backend, PkBackendJob* job,
             PkBitfield filters, char** values)
     {
+        pk_backend_job_finish(job);
     }
 
     void pk_backend_search_files(PkBackend* backend, PkBackendJob* job,
             PkBitfield filters, char** values)
     {
+        pk_backend_job_finish(job);
     }
 
     void pk_backend_search_groups(PkBackend* backend, PkBackendJob* job,
             PkBitfield filters, char** values)
     {
+        pk_backend_job_finish(job);
     }
 
     void pk_backend_search_names(PkBackend* backend, PkBackendJob* job,
             PkBitfield filters, char** values)
     {
+        pk_backend_job_finish(job);
     }
 
     void pk_backend_update_packages(PkBackend* backend, PkBackendJob* job,
             PkBitfield transactionFlags, char** packageIDS)
     {
+        pk_backend_job_finish(job);
     }
 
     void pk_backend_what_provides(PkBackend* backend, PkBackendJob* job,
             PkBitfield filters, char** values)
     {
+        pk_backend_job_finish(job);
     }
 
     void pk_backend_upgrade_system(PkBackend* backend, PkBackendJob* job,
             PkBitfield transactionFlags, const(char*) distroID, PkUpgradeKindEnum upgradeKind)
     {
+        pk_backend_job_finish(job);
     }
 
     void pk_backend_repair_system(PkBackend* backend, PkBackendJob* job,
             PkBitfield transactionFlags)
     {
+        pk_backend_job_finish(job);
     }
 }
