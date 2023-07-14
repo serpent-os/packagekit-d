@@ -16,6 +16,8 @@
 
 module packagekit.backend;
 
+@safe:
+
 import pyd.pyd;
 import pyd.embedded;
 
@@ -24,6 +26,11 @@ import pyd.embedded;
 alias GKeyFile = void;
 
 import std.stdint : uint64_t;
+
+/** 
+ * Returns: Deplicate string array
+ */
+extern (C) char** g_strdupv(char**);
 
 // TODO: Incorporate these properly
 alias PkBitfield = uint64_t;
@@ -36,6 +43,8 @@ enum PkUpgradeKindEnum
 {
     start
 }
+
+private static immutable char*[] mimeTypes = [null];
 
 export extern (C)
 {
@@ -70,7 +79,7 @@ export extern (C)
      *   config = PackageKit's configuration file
      *   self = Current backend
      */
-    void pk_backend_initialize(GKeyFile* config, PkBackend* self)
+    void pk_backend_initialize(GKeyFile* config, PkBackend* self) @trusted
     {
         imported!"core.stdc.stdio".puts("[deopkg] Init\n");
         py_init();
@@ -82,7 +91,7 @@ export extern (C)
      * Params:
      *   self = Current backend
      */
-    void pk_backend_destroy(PkBackend* self)
+    void pk_backend_destroy(PkBackend* self) @trusted
     {
         imported!"core.stdc.stdio".puts("[deopkg] Destroy\n");
         py_finish();
@@ -92,7 +101,16 @@ export extern (C)
     PkBitfield pk_backend_get_filters(PkBackend* self) => 0;
     PkBitfield pk_backend_get_roles(PkBackend* self) => 0;
     PkBitfield pk_backend_get_provides(PkBackend* self) => 0;
-    char** pk_backend_get_mime_types(PkBackend* self) => null;
+
+    /** 
+     * 
+     * Params:
+     *   self = Current backend
+     * Returns: An allocated copy of supported mimetypes
+     */
+    char** pk_backend_get_mime_types(PkBackend* self) @trusted => (cast(char**) mimeTypes.ptr)
+        .g_strdupv;
+
     bool pk_backend_supports_parallelization(PkBackend* self) => false;
     void pk_backend_job_start(PkBackend* self, PkBackendJob* job)
     {
