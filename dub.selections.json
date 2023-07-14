@@ -1,6 +1,7 @@
 {
 	"fileVersion": 1,
 	"versions": {
+		"glibd": "2.4.2",
 		"pyd": "0.14.4"
 	}
 }

@@ -2,14 +2,21 @@
 	"authors": [
 		"Ikey Doherty"
 	],
+	"targetType": "dynamicLibrary",
 	"copyright": "Copyright © 2023, Ikey Doherty",
 	"dependencies": {
+		"glibd": "~>2.4.2",
 		"pyd": "~>0.14.4"
-	},
-	"subConfigurations": {
-		"pyd": "python27"
 	},
 	"description": "Encapsulation of eopkg API",
 	"license": "Zlib",
-	"name": "deopkg"
+	"name": "deopkg",
+	"subConfigurations": {
+		"pyd": "python27"
+	},
+	"dflags-ldc": [
+		"--checkaction=C",
+		"--fvisibility=hidden",
+		"-L-Wl,--version-script=symbols.ver"
+	]
 }
