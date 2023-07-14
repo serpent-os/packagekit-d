@@ -1,5 +1,8 @@
  {
     global:
+        pk_backend_get_author;
+        pk_backend_get_name;
+        pk_backend_get_description;
         pk_backend_initialize;
         pk_backend_destroy;
         pk_backend_get_groups;
