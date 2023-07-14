@@ -16,6 +16,9 @@
 
 module packagekit.backend;
 
+import pyd.pyd;
+import pyd.embedded;
+
 // negatively impacts build time
 //import glib.c.types : GKeyFile;
 alias GKeyFile = void;
@@ -39,16 +42,50 @@ export extern (C)
     struct PkBackend;
     struct PkBackendJob;
 
+    /** 
+     * Params:
+     *   self = Current backend
+     * Returns: backend author
+     */
     const(char*) pk_backend_get_author(PkBackend* self) => "Ikey Doherty";
+
+    /** 
+     * Params:
+     *   self = Current backend
+     * Returns: backend name
+     */
     const(char*) pk_backend_get_name(PkBackend* self) => "deopkg";
+
+    /** 
+     * Params:
+     *   self = Current backend
+     * Returns: backend description
+     */
     const(char*) pk_backend_get_description(PkBackend* self) => "eopkg support";
 
+    /** 
+     * Initialise the backend
+     *
+     * Params:
+     *   config = PackageKit's configuration file
+     *   self = Current backend
+     */
     void pk_backend_initialize(GKeyFile* config, PkBackend* self)
     {
+        imported!"core.stdc.stdio".puts("[deopkg] Init\n");
+        py_init();
     }
 
+    /** 
+     * Destroy the backend
+     *
+     * Params:
+     *   self = Current backend
+     */
     void pk_backend_destroy(PkBackend* self)
     {
+        imported!"core.stdc.stdio".puts("[deopkg] Destroy\n");
+        py_finish();
     }
 
     PkBitfield pk_backend_get_groups(PkBackend* self) => 0;
