@@ -5,7 +5,6 @@
 	"targetType": "dynamicLibrary",
 	"copyright": "Copyright © 2023, Ikey Doherty",
 	"dependencies": {
-		"glibd": "~>2.4.2",
 		"pyd": "~>0.14.4"
 	},
 	"description": "Encapsulation of eopkg API",

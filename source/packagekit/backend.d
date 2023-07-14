@@ -16,7 +16,10 @@
 
 module packagekit.backend;
 
-import glib.c.types : GKeyFile;
+// negatively impacts build time
+//import glib.c.types : GKeyFile;
+alias GKeyFile = void;
+
 import std.stdint : uint64_t;
 
 // TODO: Incorporate these properly
