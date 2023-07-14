@@ -14,4 +14,4 @@ deopkg-test-*
 *.o
 *.obj
 *.lst
-libdeopkg.so
+libpk_backend_deopkg.so

@@ -17,5 +17,6 @@
 		"--checkaction=C",
 		"--fvisibility=hidden",
 		"-L-Wl,--version-script=symbols.ver"
-	]
+	],
+	"targetName": "pk_backend_deopkg"
 }
