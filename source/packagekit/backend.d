@@ -21,14 +21,12 @@ module packagekit.backend;
 import pyd.pyd;
 import pyd.embedded;
 import ldc.attributes : weak;
-
-// negatively impacts build time
 import glib.c.types : GKeyFile;
 import glib.c.functions : g_strdupv;
 
 import std.stdint : uint64_t;
 
-@weak void pk_backend_job_finish(PkBackendJob *self);
+@weak void pk_backend_job_finish(PkBackendJob* self);
 
 // TODO: Incorporate these properly
 alias PkBitfield = uint64_t;
@@ -117,23 +115,23 @@ export extern (C)
 
     void pk_backend_job_stop(PkBackend* self, PkBackendJob* job)
     {
-            pk_backend_job_finish(job);
+        pk_backend_job_finish(job);
     }
 
     void pk_backend_cancel(PkBackend* self, PkBackendJob* job)
     {
-            pk_backend_job_finish(job);
+        pk_backend_job_finish(job);
     }
 
     void pk_backend_download_packages(PkBackend* self, PkBackendJob* job,
             char** packageIDs, const(char*) dir)
     {
-            pk_backend_job_finish(job);
+        pk_backend_job_finish(job);
     }
 
     void pk_backend_get_categories(PkBackend* backend, PkBackendJob* job)
     {
-            pk_backend_job_finish(job);
+        pk_backend_job_finish(job);
     }
 
     void pk_backend_depends_on(PkBackend* backend, PkBackendJob* job,
