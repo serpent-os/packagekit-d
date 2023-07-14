@@ -18,5 +18,9 @@
 		"--fvisibility=hidden",
 		"-L-Wl,--version-script=symbols.ver"
 	],
+	"importPaths": [
+		"source",
+		"imports"
+	],
 	"targetName": "pk_backend_deopkg"
 }
