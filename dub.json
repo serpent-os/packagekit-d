@@ -3,6 +3,12 @@
 		"Ikey Doherty"
 	],
 	"copyright": "Copyright © 2023, Ikey Doherty",
+	"dependencies": {
+		"pyd": "~>0.14.4"
+	},
+	"subConfigurations": {
+		"pyd": "python27"
+	},
 	"description": "Encapsulation of eopkg API",
 	"license": "Zlib",
 	"name": "deopkg"

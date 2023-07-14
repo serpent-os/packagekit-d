@@ -15,6 +15,24 @@
 
 module main;
 
+import pyd.pyd;
+
+/**
+ * Load python2.7
+ */
+shared static this()
+{
+    py_init();
+}
+
+/**
+ * Uninitialise python2.7
+ */
+shared static ~this()
+{
+    py_finish();
+}
+
 void main()
 {
     imported!"std.stdio".writeln("TODO: Anything useful");
