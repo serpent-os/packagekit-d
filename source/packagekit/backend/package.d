@@ -35,9 +35,10 @@ private static immutable char*[] mimeTypes = [null];
 
 public import packagekit.backend.deps;
 public import packagekit.backend.files;
+public import packagekit.backend.info;
 public import packagekit.backend.install;
-public import packagekit.backend.lookup;
 public import packagekit.backend.jobs;
+public import packagekit.backend.lookup;
 public import packagekit.backend.remove;
 public import packagekit.backend.repos;
 public import packagekit.backend.search;
@@ -128,23 +129,6 @@ export extern (C)
             char** packageIDs, const(char*) dir)
     {
         pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_DOWNLOAD);
-        pk_backend_job_finished(job);
-    }
-
-    void pk_backend_get_categories(PkBackend* backend, PkBackendJob* job)
-    {
-        pk_backend_job_finished(job);
-    }
-
-    void pk_backend_get_details(PkBackend* backend, PkBackendJob* job, char** packageIDs)
-    {
-        pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_QUERY);
-        pk_backend_job_finished(job);
-    }
-
-    void pk_backend_get_details_local(PkBackend* backend, PkBackendJob* job, char** packageIDs)
-    {
-        pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_QUERY);
         pk_backend_job_finished(job);
     }
 
