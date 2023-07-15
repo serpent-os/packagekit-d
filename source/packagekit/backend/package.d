@@ -128,6 +128,7 @@ export extern (C)
 
     bool pk_backend_supports_parallelization(PkBackend* self) => false;
 
+    /* NOT SUPPORTED */
     void pk_backend_repair_system(PkBackend* backend, PkBackendJob* job,
             PkBitfield transactionFlags)
     {
