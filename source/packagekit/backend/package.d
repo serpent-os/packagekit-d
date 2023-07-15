@@ -34,6 +34,7 @@ import packagekit.enums;
 private static immutable char*[] mimeTypes = [null];
 
 public import packagekit.backend.deps;
+public import packagekit.backend.download;
 public import packagekit.backend.files;
 public import packagekit.backend.info;
 public import packagekit.backend.install;
@@ -125,13 +126,6 @@ export extern (C)
         .g_strdupv;
 
     bool pk_backend_supports_parallelization(PkBackend* self) => false;
-
-    void pk_backend_download_packages(PkBackend* self, PkBackendJob* job,
-            char** packageIDs, const(char*) dir)
-    {
-        pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_DOWNLOAD);
-        pk_backend_job_finished(job);
-    }
 
     void pk_backend_get_packages(PkBackend* backend, PkBackendJob* job, PkBitfield filters)
     {
