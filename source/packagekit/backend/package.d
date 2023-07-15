@@ -105,7 +105,26 @@ export extern (C)
         py_finish();
     }
 
-    PkBitfield pk_backend_get_groups(PkBackend* self) => 0;
+    /** 
+     * Notify the daemon of the supported groups. We hard-code as supporting
+     * all of them.
+     *
+     * Params:
+     *   self = Current backend
+     * Returns: Supported groups for enumeration
+     */
+    PkBitfield pk_backend_get_groups(PkBackend* self)
+    {
+        static PkBitfield groups;
+
+        static foreach (group; cast(PkGroupEnum) 1 .. PkGroupEnum.PK_GROUP_ENUM_LAST)
+        {
+            groups = pk_bitfield_add(groups, group);
+        }
+
+        return groups;
+    }
+
     PkBitfield pk_backend_get_roles(PkBackend* self) => 0;
     PkBitfield pk_backend_get_filters(PkBackend* self)
     {
