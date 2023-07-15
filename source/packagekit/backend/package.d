@@ -37,6 +37,7 @@ public import packagekit.backend.deps;
 public import packagekit.backend.files;
 public import packagekit.backend.install;
 public import packagekit.backend.jobs;
+public import packagekit.backend.remove;
 public import packagekit.backend.repos;
 public import packagekit.backend.search;
 public import packagekit.backend.updates;
@@ -155,12 +156,6 @@ export extern (C)
     void pk_backend_refresh_cache(PkBackend* backend, PkBackendJob* job, bool force)
     {
         pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_REFRESH_CACHE);
-        pk_backend_job_finished(job);
-    }
-
-    void pk_backend_remove_packages(PkBackend* backend, PkBackendJob* job,
-            PkBitfield transactionFlags, char** packageIDs, bool allowDeps, bool autoRemove)
-    {
         pk_backend_job_finished(job);
     }
 
