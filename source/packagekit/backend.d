@@ -75,7 +75,15 @@ export extern (C)
     void pk_backend_initialize(GKeyFile* config, PkBackend* self) @trusted
     {
         imported!"core.stdc.stdio".puts("[deopkg] Init\n");
+        on_py_init({ add_module!(ModuleName!"deopkg"); });
         py_init();
+
+        // Prove that we can "get" packages
+        import std.algorithm : each;
+        import std.stdio : writeln;
+
+        alias py_def!(import("getPackages.py"), "deopkg", string[]function()) getPackages;
+        getPackages.each!writeln;
     }
 
     /** 

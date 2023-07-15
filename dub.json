@@ -22,5 +22,8 @@
 		"source",
 		"imports"
 	],
+	"stringImportPaths": [
+		"python"
+	],
 	"targetName": "pk_backend_deopkg"
 }
