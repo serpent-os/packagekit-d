@@ -25,9 +25,9 @@ import glib.c.functions : g_strdupv;
 
 import std.stdint : uint64_t;
 import packagekit.job;
+import packagekit.bitfield;
 
 // TODO: Incorporate these properly
-alias PkBitfield = uint64_t;
 enum PkSigTypeEnum
 {
     start
@@ -162,7 +162,7 @@ export extern (C)
         pk_backend_job_finished(job);
     }
 
-    void pk_backend_get_packages(PkBackend* backend, PkBackendJob* job, PkBitfield filters)
+    void pk_backend_get_packages(PkBackend* backend, PkBackendJob* job, PkBitfield filters) @trusted
     {
         pk_backend_job_finished(job);
     }
