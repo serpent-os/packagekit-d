@@ -10,6 +10,9 @@
  * PackageKit plugin for deopkg API
  * Exposes a C API to match https://github.com/PackageKit/PackageKit/blob/main/src/pk-backend.c#L494
  *
+ * This module is split across multiple files to make the implementation simpler and group by logical
+ * functionality.
+ *
  * Authors: Copyright © 2023 Ikey Doherty
  * License: Zlib
  */
