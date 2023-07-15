@@ -33,6 +33,7 @@ import packagekit.enums;
 
 private static immutable char*[] mimeTypes = [null];
 
+public import packagekit.backend.repos;
 public import packagekit.backend.search;
 
 export extern (C)
@@ -184,12 +185,6 @@ export extern (C)
         pk_backend_job_finished(job);
     }
 
-    void pk_backend_get_repo_list(PkBackend* backend, PkBackendJob* job, PkBitfield filters)
-    {
-        pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_REQUEST);
-        pk_backend_job_finished(job);
-    }
-
     void pk_backend_required_by(PkBackend* backend, PkBackendJob* job,
             PkBitfield filters, char** packageIDs, bool recursive)
     {
@@ -234,24 +229,6 @@ export extern (C)
 
     void pk_backend_remove_packages(PkBackend* backend, PkBackendJob* job,
             PkBitfield transactionFlags, char** packageIDs, bool allowDeps, bool autoRemove)
-    {
-        pk_backend_job_finished(job);
-    }
-
-    void pk_backend_repo_enable(PkBackend* backend, PkBackendJob* job,
-            const(char*) repoID, bool enabled)
-    {
-        pk_backend_job_finished(job);
-    }
-
-    void pk_backend_repo_set_data(PkBackend* backend, PkBackendJob* job,
-            const(char*) repoID, const(char*) key, const(char*) val)
-    {
-        pk_backend_job_finished(job);
-    }
-
-    void pk_backend_repo_remove(PkBackend* backend, PkBackendJob* job,
-            PkBitfield transactionFlags, const(char*) repoID, bool autoRemove)
     {
         pk_backend_job_finished(job);
     }
