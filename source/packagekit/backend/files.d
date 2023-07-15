@@ -7,7 +7,7 @@
 /**
  * packagekit.backend.files
  *
- * FIle APIs for the PackageKit backend
+ * File APIs for the PackageKit backend
  *
  * Authors: Copyright © 2023 Ikey Doherty
  * License: Zlib
