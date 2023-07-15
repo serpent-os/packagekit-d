@@ -36,6 +36,7 @@ private static immutable char*[] mimeTypes = [null];
 public import packagekit.backend.install;
 public import packagekit.backend.repos;
 public import packagekit.backend.search;
+public import packagekit.backend.updates;
 
 export extern (C)
 {
@@ -169,12 +170,6 @@ export extern (C)
         pk_backend_job_finished(job);
     }
 
-    void pk_backend_get_distro_upgrades(PkBackend* backend, PkBackendJob* job)
-    {
-        pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_QUERY);
-        pk_backend_job_finished(job);
-    }
-
     void pk_backend_get_files(PkBackend* backend, PkBackendJob* job, char** files)
     {
         pk_backend_job_finished(job);
@@ -189,18 +184,6 @@ export extern (C)
     void pk_backend_required_by(PkBackend* backend, PkBackendJob* job,
             PkBitfield filters, char** packageIDs, bool recursive)
     {
-        pk_backend_job_finished(job);
-    }
-
-    void pk_backend_get_update_detail(PkBackend* backend, PkBackendJob* job, char** packageIDs)
-    {
-        pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_REQUEST);
-        pk_backend_job_finished(job);
-    }
-
-    void pk_backend_get_updates(PkBackend* backend, PkBackendJob* job, PkBitfield filters)
-    {
-        pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_REQUEST);
         pk_backend_job_finished(job);
     }
 
@@ -222,23 +205,10 @@ export extern (C)
         pk_backend_job_finished(job);
     }
 
-    void pk_backend_update_packages(PkBackend* backend, PkBackendJob* job,
-            PkBitfield transactionFlags, char** packageIDS)
-    {
-        pk_backend_job_finished(job);
-    }
-
     void pk_backend_what_provides(PkBackend* backend, PkBackendJob* job,
             PkBitfield filters, char** values)
     {
         pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_REQUEST);
-        pk_backend_job_finished(job);
-    }
-
-    void pk_backend_upgrade_system(PkBackend* backend, PkBackendJob* job,
-            PkBitfield transactionFlags, const(char*) distroID, PkUpgradeKindEnum upgradeKind)
-    {
-        pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_DOWNLOAD);
         pk_backend_job_finished(job);
     }
 
