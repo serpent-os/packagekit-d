@@ -21,17 +21,16 @@ module packagekit.backend;
 
 @safe:
 
-import pyd.pyd;
-import pyd.embedded;
-import glib.c.types : GKeyFile;
 import glib.c.functions : g_strdupv, g_strv_length;
-
-import std.stdint : uint64_t;
-import packagekit.job;
+import glib.c.types : GKeyFile;
 import packagekit.bitfield;
 import packagekit.enums;
-
-private static immutable char*[] mimeTypes = [null];
+import packagekit.job;
+import pyd.embedded;
+import pyd.pyd;
+import std.meta;
+import std.stdint : uint64_t;
+import std.traits;
 
 public import packagekit.backend.deps;
 public import packagekit.backend.download;
@@ -47,8 +46,7 @@ public import packagekit.backend.repos;
 public import packagekit.backend.search;
 public import packagekit.backend.updates;
 
-import std.meta;
-import std.traits;
+private static immutable char*[] mimeTypes = [null];
 
 export extern (C)
 {
@@ -153,6 +151,13 @@ export extern (C)
         return pk_bitfield_from_enums(roles);
     }
 
+    /** 
+     * Exposes all of our supported filters
+     *
+     * Params:
+     *   self = Current backend
+     * Returns: Supported filters
+     */
     PkBitfield pk_backend_get_filters(PkBackend* self)
     {
         with (PkFilterEnum)
@@ -172,6 +177,12 @@ export extern (C)
     char** pk_backend_get_mime_types(PkBackend* self) @trusted => (cast(char**) mimeTypes.ptr)
         .g_strdupv;
 
+    /** 
+     * We don't yet support threaded usage.
+     * Params:
+     *   self = Current backend
+     * Returns: False. Always.
+     */
     bool pk_backend_supports_parallelization(PkBackend* self) => false;
 
     /* NOT SUPPORTED */
