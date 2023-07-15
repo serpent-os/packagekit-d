@@ -33,6 +33,7 @@ import packagekit.enums;
 
 private static immutable char*[] mimeTypes = [null];
 
+public import packagekit.backend.deps;
 public import packagekit.backend.jobs;
 public import packagekit.backend.install;
 public import packagekit.backend.repos;
@@ -132,13 +133,6 @@ export extern (C)
         pk_backend_job_finished(job);
     }
 
-    void pk_backend_depends_on(PkBackend* backend, PkBackendJob* job,
-            PkBitfield filters, char** packageIDs, bool recursive)
-    {
-        pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_QUERY);
-        pk_backend_job_finished(job);
-    }
-
     void pk_backend_get_details(PkBackend* backend, PkBackendJob* job, char** packageIDs)
     {
         pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_QUERY);
@@ -165,12 +159,6 @@ export extern (C)
     void pk_backend_get_packages(PkBackend* backend, PkBackendJob* job, PkBitfield filters)
     {
         pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_REQUEST);
-        pk_backend_job_finished(job);
-    }
-
-    void pk_backend_required_by(PkBackend* backend, PkBackendJob* job,
-            PkBitfield filters, char** packageIDs, bool recursive)
-    {
         pk_backend_job_finished(job);
     }
 
