@@ -21,22 +21,12 @@ module packagekit.backend;
 import pyd.pyd;
 import pyd.embedded;
 import glib.c.types : GKeyFile;
-import glib.c.functions : g_strdupv;
+import glib.c.functions : g_strdupv, g_strv_length;
 
 import std.stdint : uint64_t;
 import packagekit.job;
 import packagekit.bitfield;
-
-// TODO: Incorporate these properly
-enum PkSigTypeEnum
-{
-    start
-}
-
-enum PkUpgradeKindEnum
-{
-    start
-}
+import packagekit.enums;
 
 private static immutable char*[] mimeTypes = [null];
 
@@ -89,7 +79,7 @@ export extern (C)
     /** 
      * Destroy the backend
      *
-     * Params:
+     * Params:  
      *   self = Current backend
      */
     void pk_backend_destroy(PkBackend* self) @trusted
@@ -99,12 +89,19 @@ export extern (C)
     }
 
     PkBitfield pk_backend_get_groups(PkBackend* self) => 0;
-    PkBitfield pk_backend_get_filters(PkBackend* self) => 0;
     PkBitfield pk_backend_get_roles(PkBackend* self) => 0;
+    PkBitfield pk_backend_get_filters(PkBackend* self)
+    {
+        with (PkFilterEnum)
+        {
+            return pk_bitfield_from_enums(PK_FILTER_ENUM_DEVELOPMENT,
+                    PK_FILTER_ENUM_GUI, PK_FILTER_ENUM_INSTALLED,);
+        }
+    }
+
     PkBitfield pk_backend_get_provides(PkBackend* self) => 0;
 
     /** 
-     * 
      * Params:
      *   self = Current backend
      * Returns: An allocated copy of supported mimetypes
@@ -131,6 +128,7 @@ export extern (C)
     void pk_backend_download_packages(PkBackend* self, PkBackendJob* job,
             char** packageIDs, const(char*) dir)
     {
+        pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_DOWNLOAD);
         pk_backend_job_finished(job);
     }
 
@@ -142,26 +140,31 @@ export extern (C)
     void pk_backend_depends_on(PkBackend* backend, PkBackendJob* job,
             PkBitfield filters, char** packageIDs, bool recursive)
     {
+        pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_QUERY);
         pk_backend_job_finished(job);
     }
 
     void pk_backend_get_details(PkBackend* backend, PkBackendJob* job, char** packageIDs)
     {
+        pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_QUERY);
         pk_backend_job_finished(job);
     }
 
     void pk_backend_get_details_local(PkBackend* backend, PkBackendJob* job, char** packageIDs)
     {
+        pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_QUERY);
         pk_backend_job_finished(job);
     }
 
     void pk_backend_get_files_local(PkBackend* backend, PkBackendJob* job, char** files)
     {
+        pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_QUERY);
         pk_backend_job_finished(job);
     }
 
     void pk_backend_get_distro_upgrades(PkBackend* backend, PkBackendJob* job)
     {
+        pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_QUERY);
         pk_backend_job_finished(job);
     }
 
@@ -170,13 +173,15 @@ export extern (C)
         pk_backend_job_finished(job);
     }
 
-    void pk_backend_get_packages(PkBackend* backend, PkBackendJob* job, PkBitfield filters) @trusted
+    void pk_backend_get_packages(PkBackend* backend, PkBackendJob* job, PkBitfield filters)
     {
+        pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_REQUEST);
         pk_backend_job_finished(job);
     }
 
     void pk_backend_get_repo_list(PkBackend* backend, PkBackendJob* job, PkBitfield filters)
     {
+        pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_REQUEST);
         pk_backend_job_finished(job);
     }
 
@@ -188,11 +193,13 @@ export extern (C)
 
     void pk_backend_get_update_detail(PkBackend* backend, PkBackendJob* job, char** packageIDs)
     {
+        pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_REQUEST);
         pk_backend_job_finished(job);
     }
 
     void pk_backend_get_updates(PkBackend* backend, PkBackendJob* job, PkBitfield filters)
     {
+        pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_REQUEST);
         pk_backend_job_finished(job);
     }
 
@@ -216,6 +223,7 @@ export extern (C)
 
     void pk_backend_refresh_cache(PkBackend* backend, PkBackendJob* job, bool force)
     {
+        pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_REFRESH_CACHE);
         pk_backend_job_finished(job);
     }
 
@@ -282,12 +290,14 @@ export extern (C)
     void pk_backend_what_provides(PkBackend* backend, PkBackendJob* job,
             PkBitfield filters, char** values)
     {
+        pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_REQUEST);
         pk_backend_job_finished(job);
     }
 
     void pk_backend_upgrade_system(PkBackend* backend, PkBackendJob* job,
             PkBitfield transactionFlags, const(char*) distroID, PkUpgradeKindEnum upgradeKind)
     {
+        pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_DOWNLOAD);
         pk_backend_job_finished(job);
     }
 
