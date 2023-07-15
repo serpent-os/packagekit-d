@@ -33,6 +33,8 @@ import packagekit.enums;
 
 private static immutable char*[] mimeTypes = [null];
 
+public import packagekit.backend.search;
+
 export extern (C)
 {
     struct PkBackend;
@@ -256,30 +258,6 @@ export extern (C)
 
     void pk_backend_resolve(PkBackend* backend, PkBackendJob* job,
             PkBitfield filters, char** packageIDS)
-    {
-        pk_backend_job_finished(job);
-    }
-
-    void pk_backend_search_details(PkBackend* backend, PkBackendJob* job,
-            PkBitfield filters, char** values)
-    {
-        pk_backend_job_finished(job);
-    }
-
-    void pk_backend_search_files(PkBackend* backend, PkBackendJob* job,
-            PkBitfield filters, char** values)
-    {
-        pk_backend_job_finished(job);
-    }
-
-    void pk_backend_search_groups(PkBackend* backend, PkBackendJob* job,
-            PkBitfield filters, char** values)
-    {
-        pk_backend_job_finished(job);
-    }
-
-    void pk_backend_search_names(PkBackend* backend, PkBackendJob* job,
-            PkBitfield filters, char** values)
     {
         pk_backend_job_finished(job);
     }
