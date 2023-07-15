@@ -47,6 +47,9 @@ public import packagekit.backend.repos;
 public import packagekit.backend.search;
 public import packagekit.backend.updates;
 
+import std.meta;
+import std.traits;
+
 export extern (C)
 {
     struct PkBackend;
@@ -117,6 +120,7 @@ export extern (C)
     {
         static PkBitfield groups;
 
+        groups = 0;
         static foreach (group; cast(PkGroupEnum) 1 .. PkGroupEnum.PK_GROUP_ENUM_LAST)
         {
             groups = pk_bitfield_add(groups, group);
@@ -125,7 +129,30 @@ export extern (C)
         return groups;
     }
 
-    PkBitfield pk_backend_get_roles(PkBackend* self) => 0;
+    /** 
+     * Exposes all of our supported roles.
+     *
+     * We explicitly do not support EULA, cancelation or showing old transactions atm.
+     *
+     * Params:
+     *   self = Current backend
+     * Returns: Supported roles (APIs)
+     */
+    PkBitfield pk_backend_get_roles(PkBackend* self)
+    {
+        template RoleFilter(PkRoleEnum n)
+        {
+            import std.algorithm : among;
+
+            enum RoleFilter = !n.among(PkRoleEnum.PK_ROLE_ENUM_UNKNOWN, PkRoleEnum.PK_ROLE_ENUM_ACCEPT_EULA,
+                        PkRoleEnum.PK_ROLE_ENUM_CANCEL,
+                        PkRoleEnum.PK_ROLE_ENUM_GET_OLD_TRANSACTIONS);
+        }
+
+        static roles = Filter!(RoleFilter, EnumMembers!PkRoleEnum);
+        return pk_bitfield_from_enums(roles);
+    }
+
     PkBitfield pk_backend_get_filters(PkBackend* self)
     {
         with (PkFilterEnum)
