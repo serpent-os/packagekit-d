@@ -33,6 +33,7 @@ import packagekit.enums;
 
 private static immutable char*[] mimeTypes = [null];
 
+public import packagekit.backend.install;
 public import packagekit.backend.repos;
 public import packagekit.backend.search;
 
@@ -200,24 +201,6 @@ export extern (C)
     void pk_backend_get_updates(PkBackend* backend, PkBackendJob* job, PkBitfield filters)
     {
         pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_REQUEST);
-        pk_backend_job_finished(job);
-    }
-
-    void pk_backend_install_files(PkBackend* backend, PkBackendJob* job,
-            PkBitfield transactionFlags)
-    {
-        pk_backend_job_finished(job);
-    }
-
-    void pk_backend_install_packages(PkBackend* backend, PkBackendJob* job,
-            PkBitfield transactionFlags, char** packageIDs)
-    {
-        pk_backend_job_finished(job);
-    }
-
-    void pk_backend_install_signature(PkBackend* backend, PkBackendJob* job,
-            PkSigTypeEnum type, const(char*) keyID, const(char*) packageID)
-    {
         pk_backend_job_finished(job);
     }
 
