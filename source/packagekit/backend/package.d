@@ -48,6 +48,14 @@ public import packagekit.backend.updates;
 
 private static immutable char*[] mimeTypes = [null];
 
+/**
+ * Handle python teardown in dtor
+ */
+shared static ~this() @trusted
+{
+    py_finish();
+}
+
 export extern (C)
 {
     struct PkBackend;
@@ -103,7 +111,6 @@ export extern (C)
     void pk_backend_destroy(PkBackend* self) @trusted
     {
         imported!"core.stdc.stdio".puts("[deopkg] Destroy\n");
-        py_finish();
     }
 
     /** 
