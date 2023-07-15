@@ -39,6 +39,7 @@ public import packagekit.backend.files;
 public import packagekit.backend.info;
 public import packagekit.backend.install;
 public import packagekit.backend.jobs;
+public import packagekit.backend.list;
 public import packagekit.backend.lookup;
 public import packagekit.backend.refresh;
 public import packagekit.backend.remove;
@@ -126,12 +127,6 @@ export extern (C)
         .g_strdupv;
 
     bool pk_backend_supports_parallelization(PkBackend* self) => false;
-
-    void pk_backend_get_packages(PkBackend* backend, PkBackendJob* job, PkBitfield filters)
-    {
-        pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_REQUEST);
-        pk_backend_job_finished(job);
-    }
 
     void pk_backend_repair_system(PkBackend* backend, PkBackendJob* job,
             PkBitfield transactionFlags)
