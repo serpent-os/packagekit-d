@@ -45,6 +45,7 @@ public import packagekit.backend.remove;
 public import packagekit.backend.repos;
 public import packagekit.backend.search;
 public import packagekit.backend.updates;
+import std.algorithm : among;
 
 private static immutable char*[] mimeTypes = [null];
 
@@ -123,15 +124,15 @@ export extern (C)
      */
     PkBitfield pk_backend_get_groups(PkBackend* self)
     {
-        static PkBitfield groups;
-
-        groups = 0;
-        static foreach (group; cast(PkGroupEnum) 1 .. PkGroupEnum.PK_GROUP_ENUM_LAST)
+        with (PkGroupEnum)
         {
-            groups = pk_bitfield_add(groups, group);
-        }
+            template GroupFilter(PkGroupEnum n)
+            {
+                enum GroupFilter = !n.among(PK_GROUP_ENUM_UNKNOWN, PK_GROUP_ENUM_LAST);
+            }
 
-        return groups;
+            return safeBitField(Filter!(GroupFilter, EnumMembers!PkGroupEnum));
+        }
     }
 
     /** 
@@ -145,17 +146,16 @@ export extern (C)
      */
     PkBitfield pk_backend_get_roles(PkBackend* self)
     {
-        template RoleFilter(PkRoleEnum n)
+        with (PkRoleEnum)
         {
-            import std.algorithm : among;
+            template RoleFilter(PkRoleEnum n)
+            {
+                enum RoleFilter = !n.among(PK_ROLE_ENUM_UNKNOWN, PK_ROLE_ENUM_ACCEPT_EULA,
+                            PK_ROLE_ENUM_CANCEL, PK_ROLE_ENUM_GET_OLD_TRANSACTIONS);
+            }
 
-            enum RoleFilter = !n.among(PkRoleEnum.PK_ROLE_ENUM_UNKNOWN, PkRoleEnum.PK_ROLE_ENUM_ACCEPT_EULA,
-                        PkRoleEnum.PK_ROLE_ENUM_CANCEL,
-                        PkRoleEnum.PK_ROLE_ENUM_GET_OLD_TRANSACTIONS);
+            return safeBitField(Filter!(RoleFilter, EnumMembers!PkRoleEnum));
         }
-
-        static roles = Filter!(RoleFilter, EnumMembers!PkRoleEnum);
-        return pk_bitfield_from_enums(roles);
     }
 
     /** 
@@ -169,8 +169,8 @@ export extern (C)
     {
         with (PkFilterEnum)
         {
-            return pk_bitfield_from_enums(PK_FILTER_ENUM_DEVELOPMENT,
-                    PK_FILTER_ENUM_GUI, PK_FILTER_ENUM_INSTALLED,);
+            return safeBitField(PK_FILTER_ENUM_DEVELOPMENT, PK_FILTER_ENUM_GUI,
+                    PK_FILTER_ENUM_INSTALLED);
         }
     }
 
