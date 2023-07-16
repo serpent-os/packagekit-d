@@ -21,3 +21,16 @@ Your main project should set the following in `dub.json`:
 ```
 
 Copy the `symbols.ver` linker script into your project root.
+
+
+In your main library `.d` file, you must implement the runtime hookup by providing
+an implementation of this method:
+
+```d
+export extern (C) Plugin packagekit_d_plugin_create()
+{
+	// return new MyPlugin();
+}
+```
+
+You will need to derive from the `packagekit.plugin` abstract class.
