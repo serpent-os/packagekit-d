@@ -90,10 +90,10 @@ public struct SafeBitField(E) if (is(E == enum))
      *   enums = Enums to instantiate the bitfield from
      * Returns: Strongly typed bitfield
      */
-    pure static auto from(E...)(E enums)
-            if (allSameType!E && E.length > 0 && is(E[0] == enum))
+    pure static auto from(Args...)(Args enums)
+            if (allSameType!Args && Args.length > 0 && is(Args[0] == enum))
     {
-        alias RetType = E[0];
+        alias RetType = Args[0];
         // Convert all enums into `pk_bitfield_value` and return their sum
         return SafeBitField!RetType(enums.only.map!((v) => SafeBitField!RetType.value(v)).sum);
     }
@@ -106,8 +106,9 @@ public struct SafeBitField(E) if (is(E == enum))
  *   enums = Set of enums to build a SafeBitField from
  * Returns: Strongly typed bitfield
  */
-auto safeBitField(E...)(E enums) if (allSameType!E && E.length > 0 && is(E[0] == enum))
+auto safeBitField(Args...)(Args enums)
+        if (allSameType!Args && Args.length > 0 && is(Args[0] == enum))
 {
-    alias RetType = E[0];
+    alias RetType = Args[0];
     return SafeBitField!RetType.from(enums);
 }
