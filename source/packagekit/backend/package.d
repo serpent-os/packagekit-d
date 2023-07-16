@@ -44,8 +44,7 @@ public import packagekit.backend.repos;
 public import packagekit.backend.search;
 public import packagekit.backend.updates;
 import std.algorithm : among;
-
-private static immutable char*[] mimeTypes = [null];
+import packagekit.plugin : plugin;
 
 export extern (C)
 {
@@ -56,21 +55,21 @@ export extern (C)
      *   self = Current backend
      * Returns: backend author
      */
-    const(char*) pk_backend_get_author(PkBackend* self) => "Serpent OS Developers";
+    const(char*) pk_backend_get_author(PkBackend* self) => plugin.author;
 
     /** 
      * Params:
      *   self = Current backend
      * Returns: backend name
      */
-    const(char*) pk_backend_get_name(PkBackend* self) => "packagekit-d";
+    const(char*) pk_backend_get_name(PkBackend* self) => plugin.name;
 
     /** 
      * Params:
      *   self = Current backend
      * Returns: backend description
      */
-    const(char*) pk_backend_get_description(PkBackend* self) => "eopkg support";
+    const(char*) pk_backend_get_description(PkBackend* self) => plugin.description;
 
     /** 
      * Initialise the backend
@@ -81,7 +80,7 @@ export extern (C)
      */
     void pk_backend_initialize(GKeyFile* config, PkBackend* self) @trusted
     {
-        imported!"core.stdc.stdio".puts("[packagekit-d] Init\n");
+        imported!"core.stdc.stdio".puts("[packagekit-d] Init");
     }
 
     /** 
@@ -92,7 +91,7 @@ export extern (C)
      */
     void pk_backend_destroy(PkBackend* self) @trusted
     {
-        imported!"core.stdc.stdio".puts("[packagekit-d] Destroy\n");
+        imported!"core.stdc.stdio".puts("[packagekit-d] Destroy");
     }
 
     /** 
@@ -162,8 +161,8 @@ export extern (C)
      *   self = Current backend
      * Returns: An allocated copy of supported mimetypes
      */
-    char** pk_backend_get_mime_types(PkBackend* self) @trusted => (cast(char**) mimeTypes.ptr)
-        .g_strdupv;
+    char** pk_backend_get_mime_types(PkBackend* self) @trusted => (
+            cast(char**) plugin.mimeTypes.ptr).g_strdupv;
 
     /** 
      * We don't yet support threaded usage.
