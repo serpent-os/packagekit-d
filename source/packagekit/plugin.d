@@ -22,6 +22,10 @@ import std.array : array;
 import std.algorithm : map;
 import std.exception : enforce;
 
+public import packagekit.enums;
+public import packagekit.bitfield;
+public import packagekit.job;
+
 private __gshared Plugin pluginImplementation = null;
 
 /** 
@@ -95,6 +99,17 @@ public abstract class Plugin
             }
         }();
     }
+
+    /** 
+     * List packages for the backend. Populate the PkBackendJob by its packages method
+     *
+     * TODO: Wrap PkBackendJob with a scope ref templated API that only allows adding packages and updating status/errors
+     *
+     * Params:
+     *   job = The current backend job
+     *   filter = The applicable filter
+     */
+    abstract void listPackages(PkBackendJob* job, SafeBitField!PkFilterEnum filter);
 
 package:
     pure name() => cName;
