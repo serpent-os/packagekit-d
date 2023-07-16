@@ -29,6 +29,8 @@ import packagekit.job;
 import std.meta;
 import std.stdint : uint64_t;
 import std.traits;
+import core.runtime : Runtime;
+import std.algorithm : among;
 
 public import packagekit.backend.deps;
 public import packagekit.backend.download;
@@ -43,7 +45,6 @@ public import packagekit.backend.remove;
 public import packagekit.backend.repos;
 public import packagekit.backend.search;
 public import packagekit.backend.updates;
-import std.algorithm : among;
 import packagekit.plugin : plugin;
 
 export extern (C)
@@ -80,6 +81,7 @@ export extern (C)
      */
     void pk_backend_initialize(GKeyFile* config, PkBackend* self) @trusted
     {
+        Runtime.initialize();
         imported!"core.stdc.stdio".puts("[packagekit-d] Init");
     }
 
@@ -92,6 +94,7 @@ export extern (C)
     void pk_backend_destroy(PkBackend* self) @trusted
     {
         imported!"core.stdc.stdio".puts("[packagekit-d] Destroy");
+        Runtime.terminate();
     }
 
     /** 
