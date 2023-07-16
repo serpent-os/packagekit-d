@@ -21,6 +21,7 @@ module packagekit.job;
 
 import ldc.attributes : weak;
 import packagekit.enums : PkInfoEnum, PkStatusEnum, PkErrorEnum;
+import glib.c.types : GPtrArray;
 
 /**
  * Opaque type within packagekit daemon, satisfied with weak linkage
@@ -45,6 +46,15 @@ extern (C) struct PkBackendJob;
  */
 @weak extern (C) void pk_backend_job_package(PkBackendJob* self,
         PkInfoEnum info, const char* pkgID, const char* summary) @trusted;
+
+/** 
+ * Populate with a complete set of packages (more efficient)
+ *
+ * Params:
+ *   self = Job
+ *   packages = A GPtrArray of PkPackage
+ */
+@weak extern (C) void pk_backend_job_packages(PkBackendJob* self, GPtrArray* packages) @trusted;
 
 /** 
  * Notify daemon of the job status
