@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright © 2023 Ikey Doherty
+ * SPDX-FileCopyrightText: Copyright © 2023 Serpent OS Developers
  *
  * SPDX-License-Identifier: Zlib
  */
@@ -13,7 +13,7 @@
  * PackageKit. Some API calls in the backend API require populating storage within the
  * daemon, i.e. via `.package` calls
  *
- * Authors: Copyright © 2023 Ikey Doherty
+ * Authors: Copyright © 2023 Serpent OS Developers
  * License: Zlib
  */
 

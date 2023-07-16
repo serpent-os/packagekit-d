@@ -1,29 +1,14 @@
 {
 	"authors": [
-		"Ikey Doherty"
+		"Serpent OS Developers"
 	],
-	"targetType": "dynamicLibrary",
-	"copyright": "Copyright © 2023, Ikey Doherty",
-	"dependencies": {
-		"pyd": "~>0.14.4"
-	},
-	"description": "Encapsulation of eopkg API",
+	"copyright": "Copyright © 2023, Serpent OS Developers",
+	"description": "Create packagekit backends in D",
 	"license": "Zlib",
-	"name": "deopkg",
-	"subConfigurations": {
-		"pyd": "python27"
-	},
-	"dflags-ldc": [
-		"--checkaction=C",
-		"--fvisibility=hidden",
-		"-L-Wl,--version-script=symbols.ver"
-	],
+	"name": "packagekit-d",
 	"importPaths": [
 		"source",
 		"imports"
 	],
-	"stringImportPaths": [
-		"python"
-	],
-	"targetName": "pk_backend_deopkg"
+
 }

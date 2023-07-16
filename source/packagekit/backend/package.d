@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright © 2023 Ikey Doherty
+ * SPDX-FileCopyrightText: Copyright © 2023 Serpent OS Developers
  *
  * SPDX-License-Identifier: Zlib
  */
@@ -7,13 +7,13 @@
 /**
  * packagekit.backend
  *
- * PackageKit plugin for deopkg API
+ * PackageKit plugin for packagekit-d API
  * Exposes a C API to match https://github.com/PackageKit/PackageKit/blob/main/src/pk-backend.c#L494
  *
  * This module is split across multiple files to make the implementation simpler and group by logical
  * functionality.
  *
- * Authors: Copyright © 2023 Ikey Doherty
+ * Authors: Copyright © 2023 Serpent OS Developers
  * License: Zlib
  */
 
@@ -26,8 +26,6 @@ import glib.c.types : GKeyFile;
 import packagekit.bitfield;
 import packagekit.enums;
 import packagekit.job;
-import pyd.embedded;
-import pyd.pyd;
 import std.meta;
 import std.stdint : uint64_t;
 import std.traits;
@@ -49,14 +47,6 @@ import std.algorithm : among;
 
 private static immutable char*[] mimeTypes = [null];
 
-/**
- * Handle python teardown in dtor
- */
-shared static ~this() @trusted
-{
-    py_finish();
-}
-
 export extern (C)
 {
     struct PkBackend;
@@ -66,14 +56,14 @@ export extern (C)
      *   self = Current backend
      * Returns: backend author
      */
-    const(char*) pk_backend_get_author(PkBackend* self) => "Ikey Doherty";
+    const(char*) pk_backend_get_author(PkBackend* self) => "Serpent OS Developers";
 
     /** 
      * Params:
      *   self = Current backend
      * Returns: backend name
      */
-    const(char*) pk_backend_get_name(PkBackend* self) => "deopkg";
+    const(char*) pk_backend_get_name(PkBackend* self) => "packagekit-d";
 
     /** 
      * Params:
@@ -91,16 +81,7 @@ export extern (C)
      */
     void pk_backend_initialize(GKeyFile* config, PkBackend* self) @trusted
     {
-        imported!"core.stdc.stdio".puts("[deopkg] Init\n");
-        on_py_init({ add_module!(ModuleName!"deopkg"); });
-        py_init();
-
-        // Prove that we can "get" packages
-        import std.algorithm : each;
-        import std.stdio : writeln;
-
-        alias py_def!(import("getPackages.py"), "deopkg", string[]function()) getPackages;
-        getPackages.each!writeln;
+        imported!"core.stdc.stdio".puts("[packagekit-d] Init\n");
     }
 
     /** 
@@ -111,7 +92,7 @@ export extern (C)
      */
     void pk_backend_destroy(PkBackend* self) @trusted
     {
-        imported!"core.stdc.stdio".puts("[deopkg] Destroy\n");
+        imported!"core.stdc.stdio".puts("[packagekit-d] Destroy\n");
     }
 
     /** 

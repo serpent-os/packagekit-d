@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright © 2023 Ikey Doherty
+ * SPDX-FileCopyrightText: Copyright © 2023 Serpent OS Developers
  *
  * SPDX-License-Identifier: Zlib
  */
@@ -9,7 +9,7 @@
  *
  * Lookup (resolve/providers) APIs for the PackageKit backend
  *
- * Authors: Copyright © 2023 Ikey Doherty
+ * Authors: Copyright © 2023 Serpent OS Developers
  * License: Zlib
  */
 

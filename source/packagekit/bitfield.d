@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright © 2023 Ikey Doherty
+ * SPDX-FileCopyrightText: Copyright © 2023 Serpent OS Developers
  *
  * SPDX-License-Identifier: Zlib
  */
@@ -10,7 +10,7 @@
  * PackageKit plugin for deopkg API
  * Exposes a C API to match https://github.com/PackageKit/PackageKit/blob/main/src/pk-backend.c#L494
  *
- * Authors: Copyright © 2023 Ikey Doherty
+ * Authors: Copyright © 2023 Serpent OS Developers
  * License: Zlib
  */
 
