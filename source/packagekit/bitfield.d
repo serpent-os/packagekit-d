@@ -108,5 +108,6 @@ public struct SafeBitField(E) if (is(E == enum))
  */
 auto safeBitField(E...)(E enums) if (allSameType!E && E.length > 0 && is(E[0] == enum))
 {
-    return SafeBitField!(E[0]).from(enums);
+    alias RetType = E[0];
+    return SafeBitField!RetType.from(enums);
 }
