@@ -2,6 +2,7 @@
 	"authors": [
 		"Serpent OS Developers"
 	],
+	"targetType": "sourceLibrary",
 	"copyright": "Copyright © 2023, Serpent OS Developers",
 	"description": "Create packagekit backends in D",
 	"license": "Zlib",
