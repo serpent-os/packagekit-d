@@ -20,9 +20,13 @@ import glib.c.functions : g_error_free, g_ptr_array_new_with_free_func,
     g_ptr_array_new_full, g_ptr_array_unref, g_ptr_array_add;
 import gobject.c.functions : g_object_unref, g_object_ref;
 import packagekit.enums;
-import ldc.attributes : weak;
 import std.string : fromStringz, toStringz;
 import std.exception : enforce;
+
+version (LDC)
+    import ldc.attributes : weak;
+else
+    import core.attributes : weak;
 
 struct PackageList
 {

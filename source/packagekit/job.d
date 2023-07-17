@@ -19,9 +19,13 @@
 
 module packagekit.job;
 
-import ldc.attributes : weak;
 import packagekit.enums : PkInfoEnum, PkStatusEnum, PkErrorEnum;
 import glib.c.types : GPtrArray;
+
+version (LDC)
+    import ldc.attributes : weak;
+else
+    import core.attributes : weak;
 
 /**
  * Opaque type within packagekit daemon, satisfied with weak linkage
