@@ -5,10 +5,9 @@
  */
 
 /**
- * packagekit.backend
+ * packagekit.bitfield
  *
- * PackageKit plugin for deopkg API
- * Exposes a C API to match https://github.com/PackageKit/PackageKit/blob/main/src/pk-backend.c#L494
+ * Adaptation of PkBitfield for strong typing
  *
  * Authors: Copyright © 2023 Serpent OS Developers
  * License: Zlib
