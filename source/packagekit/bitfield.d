@@ -91,7 +91,7 @@ public struct SafeBitField(E) if (is(E == enum))
      * Returns: Strongly typed bitfield
      */
     pure static auto from(Args...)(Args enums)
-            if (allSameType!Args && Args.length > 0 && is(Args[0] == enum))
+            if (allSameType!Args && Args.length > 0 && is(Args[0] == E))
     {
         alias RetType = Args[0];
         // Convert all enums into `pk_bitfield_value` and return their sum
