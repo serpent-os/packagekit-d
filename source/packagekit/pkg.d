@@ -59,7 +59,7 @@ struct PackageList
         assert(ptr !is null);
     }
 
-    ~this()
+    ~this() @trusted
     {
         if (ptr is null)
             return;

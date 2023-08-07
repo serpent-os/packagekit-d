@@ -77,7 +77,7 @@ public struct BackendJob
      * Params:
      *   pkgs = The package list
      */
-    void addPackages(scope ref PackageList pkgs) @trusted => pk_backend_job_packages(ptr,
+    void addPackages(scope ref PackageList pkgs) return @trusted => pk_backend_job_packages(ptr,
             pkgs.pointer);
 
     /** 
