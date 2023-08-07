@@ -72,15 +72,10 @@ public struct SafeBitField(E) if (is(E == enum))
      */
     auto invert(E num) => core ^= value(num);
 
-    /** 
-     * Test if a value is present
-     *
-     * Params:
-     *   op = Always `in`
-     *   num = value
+    /**
      * Returns: true if the bitfield contains the given enum value
      */
-    pure opBinary(string op : "in")(E num) => ((core & value(num)) > 0);
+    pure auto contains(E num) => ((core & value(num)) > 0);
 
     /** 
      * Instantiate a bitfield from the given input types
