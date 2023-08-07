@@ -27,53 +27,90 @@ version (LDC)
 else
     import core.attributes : weak;
 
+import packagekit.pkg;
+
 /**
  * Opaque type within packagekit daemon, satisfied with weak linkage
  */
 extern (C) struct PkBackendJob;
 
 /** 
- * Notify completion of a job
- * Params:
- *   self = Job
+ * Sane encapsulation of a PkBackendJob for idiomatic D API
  */
-@weak extern (C) void pk_backend_job_finished(PkBackendJob* self) @trusted;
+public struct BackendJob
+{
+    @disable this();
+    @disable this(this);
 
-/** 
- * Append a package to the current backend job
- *
- * Params:
- *   self = Job
- *   info = Info enum (Installed/Available/etc)
- *   pkgID = Unique package identifier
- *   summary = Summary of the package
- */
-@weak extern (C) void pk_backend_job_package(PkBackendJob* self,
-        PkInfoEnum info, const char* pkgID, const char* summary) @trusted;
+    invariant ()
+    {
+        assert(ptr !is null);
+    }
 
-/** 
- * Populate with a complete set of packages (more efficient)
- *
- * Params:
- *   self = Job
- *   packages = A GPtrArray of PkPackage
- */
-@weak extern (C) void pk_backend_job_packages(PkBackendJob* self, GPtrArray* packages) @trusted;
+    /** 
+     * Update the job status
+     *
+     * Params:
+     *   status = New status for this job
+     * Returns: Reference to this
+     */
+    @property ref auto status(PkStatusEnum status) @trusted
+    {
+        pk_backend_job_set_status(ptr, status);
+        return this;
+    }
 
-/** 
- * Notify daemon of the job status
- *
- * Params:
- *   job = Job
- *   status = New status for our job
- */
-@weak extern (C) void pk_backend_job_set_status(PkBackendJob* job, PkStatusEnum status) @trusted;
+    /** 
+     * Notify PackageKit this job is now complete
+     *
+     * Returns: Reference to this
+     */
+    ref auto finished() @trusted
+    {
+        pk_backend_job_finished(ptr);
+        return this;
+    }
 
-/** 
- * Notify daemon of an error with the job
- *
- * Params:
- *   job = Job
- *   code = The error code
- */
-@weak extern (C) void pk_backend_job_error_code(PkBackendJob* job, PkErrorEnum code) @trusted;
+    /** 
+     * Add a set of packages to this job report
+     *
+     * Params:
+     *   pkgs = The package list
+     */
+    void addPackages(scope ref PackageList pkgs) @trusted => pk_backend_job_packages(ptr,
+            pkgs.pointer);
+
+    /** 
+     * Set the error code for this job
+     *
+     * Params:
+     *   err = New error code
+     * Returns: Reference to this
+     */
+    @property ref auto errorCode(PkErrorEnum err) @trusted
+    {
+        pk_backend_job_error_code(ptr, err);
+        return this;
+    }
+
+package:
+
+    this(PkBackendJob* ptr) @safe @nogc nothrow
+    {
+        this.ptr = ptr;
+    }
+
+private:
+
+    PkBackendJob* ptr;
+}
+
+private extern (C)
+{
+    @weak void pk_backend_job_finished(PkBackendJob* self);
+    @weak void pk_backend_job_package(PkBackendJob* self, PkInfoEnum info,
+            const char* pkgID, const char* summary);
+    @weak void pk_backend_job_packages(PkBackendJob* self, GPtrArray* packages);
+    @weak void pk_backend_job_set_status(PkBackendJob* job, PkStatusEnum status);
+    @weak void pk_backend_job_error_code(PkBackendJob* job, PkErrorEnum code);
+}

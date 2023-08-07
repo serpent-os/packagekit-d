@@ -24,12 +24,11 @@ export extern (C)
 {
     void pk_backend_get_files_local(PkBackend* backend, PkBackendJob* job, char** files)
     {
-        pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_QUERY);
-        pk_backend_job_finished(job);
+        BackendJob(job).status(PkStatusEnum.PK_STATUS_ENUM_QUERY).finished;
     }
 
     void pk_backend_get_files(PkBackend* backend, PkBackendJob* job, char** files)
     {
-        pk_backend_job_finished(job);
+        BackendJob(job).finished;
     }
 }

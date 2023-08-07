@@ -25,6 +25,6 @@ export extern (C)
     void pk_backend_remove_packages(PkBackend* backend, PkBackendJob* job,
             PkBitfield transactionFlags, char** packageIDs, bool allowDeps, bool autoRemove)
     {
-        pk_backend_job_finished(job);
+        BackendJob(job).finished;
     }
 }

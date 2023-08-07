@@ -25,13 +25,12 @@ export extern (C)
     void pk_backend_required_by(PkBackend* backend, PkBackendJob* job,
             PkBitfield filters, char** packageIDs, bool recursive)
     {
-        pk_backend_job_finished(job);
+        BackendJob(job).finished;
     }
 
     void pk_backend_depends_on(PkBackend* backend, PkBackendJob* job,
             PkBitfield filters, char** packageIDs, bool recursive)
     {
-        pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_QUERY);
-        pk_backend_job_finished(job);
+        BackendJob(job).status(PkStatusEnum.PK_STATUS_ENUM_QUERY).finished;
     }
 }

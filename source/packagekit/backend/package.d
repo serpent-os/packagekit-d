@@ -179,6 +179,6 @@ export extern (C)
     void pk_backend_repair_system(PkBackend* backend, PkBackendJob* job,
             PkBitfield transactionFlags)
     {
-        pk_backend_job_finished(job);
+        BackendJob(job).finished;
     }
 }

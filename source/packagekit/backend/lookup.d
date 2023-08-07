@@ -25,13 +25,13 @@ export extern (C)
     void pk_backend_resolve(PkBackend* backend, PkBackendJob* job,
             PkBitfield filters, char** packageIDS)
     {
-        pk_backend_job_finished(job);
+        BackendJob(job).finished;
     }
 
     void pk_backend_what_provides(PkBackend* backend, PkBackendJob* job,
             PkBitfield filters, char** values)
     {
-        pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_REQUEST);
-        pk_backend_job_finished(job);
+        BackendJob(job).status(PkStatusEnum.PK_STATUS_ENUM_QUERY).finished;
+
     }
 }

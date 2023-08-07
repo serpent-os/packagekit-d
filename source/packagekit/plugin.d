@@ -103,13 +103,11 @@ public abstract class Plugin
     /** 
      * List packages for the backend. Populate the PkBackendJob by its packages method
      *
-     * TODO: Wrap PkBackendJob with a scope ref templated API that only allows adding packages and updating status/errors
-     *
      * Params:
      *   job = The current backend job
      *   filter = The applicable filter
      */
-    abstract void listPackages(PkBackendJob* job, SafeBitField!PkFilterEnum filter);
+    abstract void listPackages(scope ref BackendJob job, SafeBitField!PkFilterEnum filter);
 
 package:
     pure name() => cName;

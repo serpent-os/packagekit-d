@@ -23,18 +23,16 @@ export extern (C)
 {
     void pk_backend_get_categories(PkBackend* backend, PkBackendJob* job)
     {
-        pk_backend_job_finished(job);
+        BackendJob(job).finished;
     }
 
     void pk_backend_get_details(PkBackend* backend, PkBackendJob* job, char** packageIDs)
     {
-        pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_QUERY);
-        pk_backend_job_finished(job);
+        BackendJob(job).status(PkStatusEnum.PK_STATUS_ENUM_QUERY).finished;
     }
 
     void pk_backend_get_details_local(PkBackend* backend, PkBackendJob* job, char** packageIDs)
     {
-        pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_QUERY);
-        pk_backend_job_finished(job);
+        BackendJob(job).status(PkStatusEnum.PK_STATUS_ENUM_QUERY).finished;
     }
 }

@@ -67,7 +67,7 @@ struct PackageList
         ptr = null;
     }
 
-    auto pointer() => ptr;
+    package auto pointer() => ptr;
 
 private:
 

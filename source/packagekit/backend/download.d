@@ -24,7 +24,6 @@ export extern (C)
     void pk_backend_download_packages(PkBackend* self, PkBackendJob* job,
             char** packageIDs, const(char*) dir)
     {
-        pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_DOWNLOAD);
-        pk_backend_job_finished(job);
+        BackendJob(job).status(PkStatusEnum.PK_STATUS_ENUM_DOWNLOAD).finished;
     }
 }

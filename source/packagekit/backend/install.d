@@ -25,18 +25,18 @@ export extern (C)
     void pk_backend_install_files(PkBackend* backend, PkBackendJob* job,
             PkBitfield transactionFlags)
     {
-        pk_backend_job_finished(job);
+        BackendJob(job).finished;
     }
 
     void pk_backend_install_packages(PkBackend* backend, PkBackendJob* job,
             PkBitfield transactionFlags, char** packageIDs)
     {
-        pk_backend_job_finished(job);
+        BackendJob(job).finished;
     }
 
     void pk_backend_install_signature(PkBackend* backend, PkBackendJob* job,
             PkSigTypeEnum type, const(char*) keyID, const(char*) packageID)
     {
-        pk_backend_job_finished(job);
+        BackendJob(job).finished;
     }
 }

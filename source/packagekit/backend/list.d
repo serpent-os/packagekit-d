@@ -27,8 +27,9 @@ export extern (C)
 {
     void pk_backend_get_packages(PkBackend* backend, PkBackendJob* job, PkBitfield filters)
     {
-        pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_REQUEST);
-        plugin.listPackages(job, SafeBitField!PkFilterEnum(filters));
-        pk_backend_job_finished(job);
+        auto j = BackendJob(job);
+        j.status(PkStatusEnum.PK_STATUS_ENUM_REQUEST);
+        plugin.listPackages(j, SafeBitField!PkFilterEnum(filters));
+        j.finished;
     }
 }

@@ -23,7 +23,6 @@ export extern (C)
 {
     void pk_backend_refresh_cache(PkBackend* backend, PkBackendJob* job, bool force)
     {
-        pk_backend_job_set_status(job, PkStatusEnum.PK_STATUS_ENUM_REFRESH_CACHE);
-        pk_backend_job_finished(job);
+        BackendJob(job).status(PkStatusEnum.PK_STATUS_ENUM_REFRESH_CACHE).finished;
     }
 }

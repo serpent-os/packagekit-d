@@ -22,16 +22,16 @@ export extern (C)
 {
     void pk_backend_job_start(PkBackend* self, PkBackendJob* job)
     {
-        pk_backend_job_finished(job);
+        BackendJob(job).finished;
     }
 
     void pk_backend_job_stop(PkBackend* self, PkBackendJob* job)
     {
-        pk_backend_job_finished(job);
+        BackendJob(job).finished;
     }
 
     void pk_backend_cancel(PkBackend* self, PkBackendJob* job)
     {
-        pk_backend_job_finished(job);
+        BackendJob(job).finished;
     }
 }
