@@ -101,6 +101,13 @@ public abstract class Plugin
     }
 
     /** 
+     * Implementatios are now fully bound and may initialise.
+     */
+    abstract void initialize()
+    {
+    }
+
+    /** 
      * List packages for the backend. Populate the PkBackendJob by its packages method
      *
      * Params:

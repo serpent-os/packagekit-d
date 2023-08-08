@@ -83,6 +83,7 @@ export extern (C)
     {
         Runtime.initialize();
         imported!"core.stdc.stdio".puts("[packagekit-d] Init");
+        plugin.initialize();
     }
 
     /** 
