@@ -116,6 +116,17 @@ public abstract class Plugin
      */
     abstract void listPackages(scope ref BackendJob job, SafeBitField!PkFilterEnum filter);
 
+    /** 
+     * Resolve the given packages
+     *
+     * Params:
+     *   job = The current backend job
+     *   filter = The applicable filter
+     *   ids = ID of the packages to resolve
+     */
+    abstract void resolve(scope ref BackendJob job,
+            SafeBitField!PkFilterEnum filter, const(char*)[] id);
+
 package:
     pure name() => cName;
     pure description() => cDescription;
