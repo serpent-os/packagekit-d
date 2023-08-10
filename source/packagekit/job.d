@@ -28,6 +28,7 @@ else
     import core.attributes : weak;
 
 import packagekit.pkg;
+import std.string : toStringz;
 
 /**
  * Opaque type within packagekit daemon, satisfied with weak linkage
@@ -81,6 +82,16 @@ public struct BackendJob
             pkgs.pointer);
 
     /** 
+     * Add a repo to PkBackend job
+     * Params:
+     *   id = Repo ID
+     *   description = Readable description for the repo
+     *   enabled = Whether its enabled or not
+     */
+    void addRepo(scope ref string id, scope ref string description, bool enabled) return @trusted => pk_backend_job_repo_detail(
+            ptr, id.toStringz, description.toStringz, enabled);
+
+    /** 
      * Set the error code for this job
      *
      * Params:
@@ -113,4 +124,6 @@ private extern (C)
     @weak void pk_backend_job_packages(PkBackendJob* self, GPtrArray* packages);
     @weak void pk_backend_job_set_status(PkBackendJob* job, PkStatusEnum status);
     @weak void pk_backend_job_error_code(PkBackendJob* job, PkErrorEnum code);
+    @weak void pk_backend_job_repo_detail(PkBackendJob* job, const(char*) id,
+            const(char*) description, bool enabled);
 }

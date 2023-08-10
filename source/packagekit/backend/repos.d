@@ -20,12 +20,17 @@ import packagekit.job;
 import packagekit.bitfield;
 import packagekit.enums;
 
+import packagekit.plugin : plugin;
+
 export extern (C)
 {
     void pk_backend_get_repo_list(PkBackend* backend, PkBackendJob* job, PkBitfield filters)
     {
-        BackendJob(job).status(PkStatusEnum.PK_STATUS_ENUM_QUERY).finished;
-
+        auto j = BackendJob(job);
+        j.status(PkStatusEnum.PK_STATUS_ENUM_QUERY);
+        scope (exit)
+            j.finished;
+        plugin.listRepos(j, SafeBitField!PkFilterEnum(filters));
     }
 
     void pk_backend_repo_enable(PkBackend* backend, PkBackendJob* job,

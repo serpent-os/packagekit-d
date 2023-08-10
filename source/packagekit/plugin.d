@@ -117,6 +117,14 @@ public abstract class Plugin
     abstract void listPackages(scope ref BackendJob job, SafeBitField!PkFilterEnum filter);
 
     /** 
+     * List repos for the backend. Populate using the addRepo method
+     * Params:
+     *   job = The current backend job
+     *   filter = The applicable filter
+     */
+    abstract void listRepos(scope ref BackendJob job, SafeBitField!PkFilterEnum filter);
+
+    /** 
      * Resolve the given packages
      *
      * Params:
